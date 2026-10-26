@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Para mi hermosa Lizeth 🌷</title>
     <!-- Fuentes elegantes y manuscritas de Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;600;700&family=Dancing+Script:wght@600;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
@@ -27,16 +27,17 @@
             color: var(--texto);
             overflow-x: hidden;
             line-height: 1.6;
+            -webkit-tap-highlight-color: transparent;
         }
 
         h1, h2, h3 { font-family: 'Playfair Display', serif; color: var(--rojo-vino); }
 
-        /* --- PANTALLA DE BIENVENIDA (Para activar audio en móvil) --- */
+        /* --- PANTALLA DE BIENVENIDA --- */
         #welcome-screen {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: linear-gradient(135deg, var(--rojo-vino), #4a0000);
             display: flex; flex-direction: column; justify-content: center; align-items: center;
-            z-index: 9999; cursor: pointer; transition: opacity 0.8s ease;
+            z-index: 9999; cursor: pointer; transition: opacity 0.6s ease;
         }
         #welcome-screen h1 { color: var(--dorado); font-size: 2.5rem; text-align: center; margin-bottom: 20px; }
         #welcome-screen p { color: var(--crema); font-size: 1.2rem; animation: pulse 2s infinite; }
@@ -48,8 +49,12 @@
         section {
             min-height: 80vh; display: flex; flex-direction: column; 
             justify-content: center; align-items: center; text-align: center;
-            padding: 40px 20px; opacity: 0; transform: translateY(30px);
-            transition: all 1s ease-out;
+            padding: 40px 20px; 
+            opacity: 0; 
+            transform: translateY(40px);
+            /* Transición optimizada y más rápida */
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+            will-change: opacity, transform;
         }
         section.visible { opacity: 1; transform: translateY(0); }
 
@@ -63,13 +68,13 @@
             position: relative;
             background: #ffffff;
             padding: 40px 25px;
-            border-radius: 4px; /* Bordes menos redondos para parecer papel */
+            border-radius: 4px;
             box-shadow: 0 15px 40px rgba(139, 0, 0, 0.1);
-            border: 1px solid rgba(212, 175, 55, 0.4); /* Borde dorado sutil */
-            overflow: hidden; /* Para que las imágenes decorativas no se salgan */
+            border: 1px solid rgba(212, 175, 55, 0.4);
+            overflow: hidden;
+            width: 100%;
         }
 
-        /* Imágenes decorativas difuminadas e inclinadas */
         .decor-img {
             position: absolute;
             opacity: 0.45;
@@ -85,11 +90,11 @@
 
         .letter-content {
             position: relative;
-            z-index: 2; /* Por encima de las imágenes decorativas */
-            font-family: 'Caveat', cursive; /* Fuente tipo manuscrita */
-            font-size: 1.4rem;
+            z-index: 2;
+            font-family: 'Caveat', cursive;
+            font-size: 1.45rem; /* Un poquito más grande para leer fácil en cel */
             color: var(--texto);
-            line-height: 1.7;
+            line-height: 1.6;
             text-align: left;
         }
         .letter-content p { margin-bottom: 1.2rem; }
@@ -97,7 +102,7 @@
 
         .sign-off {
             font-family: 'Dancing Script', cursive;
-            font-size: 2rem;
+            font-size: 2.2rem;
             text-align: right;
             color: var(--rojo-vino);
             margin-top: 2rem;
@@ -106,7 +111,7 @@
 
         .posdata {
             font-family: 'Caveat', cursive;
-            font-size: 1.3rem;
+            font-size: 1.35rem;
             color: var(--rojo-suave);
             border-top: 1px dashed var(--dorado);
             padding-top: 1.2rem;
@@ -163,8 +168,8 @@
 
     <!-- PANTALLA DE BIENVENIDA -->
     <div id="welcome-screen">
-        <h1>Para Lizeth 🌷</h1>
-        <p>Toca para abrir tu sorpresa 🎁</p>
+        <h1>Para la niña más hermosa del mundo 🌷</h1>
+        <p>Click 🎁</p>
     </div>
 
     <!-- AUDIO (Oculto) -->
@@ -174,7 +179,7 @@
 
     <div class="container">
         <!-- SECCIÓN 1: INTRO -->
-        <section class="hero">
+        <section class="hero visible"> <!-- 'visible' por defecto para que cargue al instante -->
             <div class="hero-emoji">🌷🍓</div>
             <h1>Felices 22,<br>mi hermosa Lizeth</h1>
             <p class="subtitle">Desliza hacia abajo, mi pinwi...</p>
@@ -183,7 +188,6 @@
         <!-- SECCIÓN 2: CARTA -->
         <section class="message">
             <div class="letter-container">
-                <!-- Imágenes decorativas difuminadas -->
                 <img src="tulipan.jpeg" alt="tulipan" class="decor-img tulipan-1">
                 <img src="fresita.jpeg" alt="fresita" class="decor-img fresita-1">
                 <img src="tulipan.jpeg" alt="tulipan" class="decor-img tulipan-2">
@@ -201,7 +205,7 @@
                     <p>Sonará muy cliché, pero hoy me quedé contemplando todo esto y me di cuenta de que, desde el día en que llegaste a mi vida, no he dejado de pensar en ti ni un solo segundo. Siempre intento ser agradecida con Dios por las cosas buenas, pero tu llegada a mi vida es, sin duda, el detalle más hermoso de todos. Es bonito pensar que este tiempo conociéndonos es solo una pequeña fracción de todo el camino bonito que nos espera juntas. Eres un ser lleno de luz, de vida y de magia. Estoy completamente segura de que la pequeña Liz que llevas dentro abraza con orgullo a la mujer valiente, fuerte y capaz en la que te has transformado. Pese a todo, sigues brillando con un alma pura y simplemente admirable. 💗🥺</p>
                     <p>Gracias por tu vida, por tu esencia tan auténtica, por tu tenacidad y por esa energía contagiosa con la que haces todo. Deseo con todo mi ser que alcances cada meta, cada sueño y cada propósito que te propongas, y ahí estaré yo, sosteniendo tu mano y apoyándote incondicionalmenteeee. Y si por alguna cosa u otra algún día las cosas cambian, quiero que guardes en el alma que una parte de mí siempre te va a pertenecer, hasta mi último suspiro. 🥺💗</p>
                     <p>Que estos 22 años te devuelvan al multiplicado toda la felicidad, la paz y el amor que tú le traes a mi vida cada día, mi niña hermosaaa 🥺💗 ¡Feliz cumpleaños! ❤️🥹</p>
-                    <p class="sign-off">Con todo mi amor💗</p>
+                    <p class="sign-off">Con todo mi amor 💗</p>
                     <p class="posdata"><strong>Posdata:</strong> No terminé de escribir todo ese día porque me pusiste muy cachondis y jajjaja, perooo, siento exactamente lo mismo, bueno incluso lo siento con más intensidad, me encantas, mi niñaa 🥺💗</p>
                 </div>
             </div>
@@ -223,7 +227,7 @@
         <section class="final-message" id="final-section">
             <h2>Te amo</h2>
             <p style="font-size: 1.2rem; margin-top: 10px;">Hoy, mañana y siempre.</p>
-            <div class="final-emoji">🍓🌷❤️</div>
+            <div class="final-emoji">🐧💗🐧</div>
         </section>
     </div>
 
@@ -238,8 +242,8 @@
             audio.play().then(() => {
                 isPlaying = true;
                 welcomeScreen.classList.add('hidden');
-                setTimeout(() => { welcomeScreen.style.display = 'none'; }, 800);
-            }).catch(e => console.log("Error al reproducir:", e));
+                setTimeout(() => { welcomeScreen.style.display = 'none'; }, 600);
+            }).catch(e => console.log("Esperando interacción para audio:", e));
         });
 
         // --- 2. BOTÓN PLAY/PAUSE ---
@@ -254,24 +258,24 @@
             isPlaying = !isPlaying;
         });
 
-        // --- 3. ANIMACIÓN AL HACER SCROLL (Intersection Observer) ---
+        // --- 3. ANIMACIÓN AL HACER SCROLL (OPTIMIZADA) ---
+        // threshold: 0.05 significa que se activa apenas se ve el 5% del elemento
+        // rootMargin: "-50px" hace que se active un poquito antes de llegar, se siente más rápido
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
                     entry.target.classList.add('visible');
                     
-                    // Generar corazones flotantes al hacer scroll en la carta o música
                     if(entry.target.classList.contains('message') || entry.target.classList.contains('music')) {
                         createHeart();
                     }
 
-                    // --- 4. CONFETI AL LLEGAR AL FINAL ---
                     if (entry.target.id === 'final-section') {
                         launchConfetti();
                     }
                 }
             });
-        }, { threshold: 0.2 }); // Umbral un poco más bajo para que active antes
+        }, { threshold: 0.05, rootMargin: "0px 0px -50px 0px" });
 
         document.querySelectorAll('section').forEach(section => {
             observer.observe(section);
