@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Para mi hermosa Lizeth 🌷</title>
+    <!-- Fuentes elegantes y manuscritas de Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;600;700&family=Dancing+Script:wght@600;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    <!-- Librería ligera para el confeti -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    
+    <style>
+        /* --- ESTILOS GENERALES (Móvil primero) --- */
+        :root {
+            --rojo-vino: #8B0000;
+            --rojo-suave: #C41E3A;
+            --dorado: #D4AF37;
+            --crema: #FFF8F0;
+            --texto: #2C0000;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: 'Playfair Display', serif;
+            background-color: var(--crema);
+            color: var(--texto);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        h1, h2, h3 { font-family: 'Playfair Display', serif; color: var(--rojo-vino); }
+
+        /* --- PANTALLA DE BIENVENIDA (Para activar audio en móvil) --- */
+        #welcome-screen {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(135deg, var(--rojo-vino), #4a0000);
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+            z-index: 9999; cursor: pointer; transition: opacity 0.8s ease;
+        }
+        #welcome-screen h1 { color: var(--dorado); font-size: 2.5rem; text-align: center; margin-bottom: 20px; }
+        #welcome-screen p { color: var(--crema); font-size: 1.2rem; animation: pulse 2s infinite; }
+        .hidden { opacity: 0; pointer-events: none; }
+
+        /* --- CONTENIDO PRINCIPAL --- */
+        .container { max-width: 600px; margin: 0 auto; padding: 20px; }
+
+        section {
+            min-height: 80vh; display: flex; flex-direction: column; 
+            justify-content: center; align-items: center; text-align: center;
+            padding: 40px 20px; opacity: 0; transform: translateY(30px);
+            transition: all 1s ease-out;
+        }
+        section.visible { opacity: 1; transform: translateY(0); }
+
+        /* --- SECCIÓN 1: HERO --- */
+        .hero-emoji { font-size: 4rem; margin-bottom: 20px; animation: float 3s ease-in-out infinite; }
+        .hero h1 { font-size: 3rem; margin-bottom: 10px; line-height: 1.2; }
+        .hero .subtitle { font-size: 1.3rem; color: var(--rojo-suave); font-style: italic; }
+
+        /* --- SECCIÓN 2: CARTA MANUSCRITA --- */
+        .letter-container {
+            position: relative;
+            background: #ffffff;
+            padding: 40px 25px;
+            border-radius: 4px; /* Bordes menos redondos para parecer papel */
+            box-shadow: 0 15px 40px rgba(139, 0, 0, 0.1);
+            border: 1px solid rgba(212, 175, 55, 0.4); /* Borde dorado sutil */
+            overflow: hidden; /* Para que las imágenes decorativas no se salgan */
+        }
+
+        /* Imágenes decorativas difuminadas e inclinadas */
+        .decor-img {
+            position: absolute;
+            opacity: 0.45;
+            filter: blur(1.5px);
+            pointer-events: none;
+            z-index: 1;
+            object-fit: contain;
+        }
+        .tulipan-1 { width: 70px; top: 15px; right: 10px; transform: rotate(15deg); }
+        .fresita-1 { width: 60px; bottom: 180px; left: 10px; transform: rotate(-20deg); }
+        .tulipan-2 { width: 55px; top: 45%; right: 5px; transform: rotate(-10deg); opacity: 0.35; }
+        .fresita-2 { width: 65px; bottom: 30px; right: 15px; transform: rotate(25deg); opacity: 0.4; }
+
+        .letter-content {
+            position: relative;
+            z-index: 2; /* Por encima de las imágenes decorativas */
+            font-family: 'Caveat', cursive; /* Fuente tipo manuscrita */
+            font-size: 1.4rem;
+            color: var(--texto);
+            line-height: 1.7;
+            text-align: left;
+        }
+        .letter-content p { margin-bottom: 1.2rem; }
+        .highlight { color: var(--rojo-suave); font-weight: 700; }
+
+        .sign-off {
+            font-family: 'Dancing Script', cursive;
+            font-size: 2rem;
+            text-align: right;
+            color: var(--rojo-vino);
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .posdata {
+            font-family: 'Caveat', cursive;
+            font-size: 1.3rem;
+            color: var(--rojo-suave);
+            border-top: 1px dashed var(--dorado);
+            padding-top: 1.2rem;
+            margin-top: 1rem;
+            font-style: italic;
+        }
+
+        /* --- SECCIÓN 3: REPRODUCTOR --- */
+        .music-player {
+            background: var(--rojo-vino); color: var(--crema);
+            padding: 25px; border-radius: 20px; width: 100%;
+            box-shadow: 0 15px 35px rgba(139, 0, 0, 0.3);
+        }
+        .cover-art {
+            width: 150px; height: 150px; object-fit: cover;
+            border-radius: 15px; border: 3px solid var(--dorado);
+            margin-bottom: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+        .song-info h3 { color: var(--dorado); font-size: 1.4rem; margin-bottom: 5px; }
+        .song-info p { color: rgba(255,248,240,0.8); font-size: 1rem; margin-bottom: 20px; }
+        .play-btn {
+            background: var(--dorado); color: var(--rojo-vino);
+            border: none; width: 60px; height: 60px; border-radius: 50%;
+            font-size: 1.5rem; cursor: pointer; display: flex;
+            justify-content: center; align-items: center; margin: 0 auto;
+            transition: transform 0.2s;
+        }
+        .play-btn:active { transform: scale(0.9); }
+
+        /* --- SECCIÓN 4: FINAL --- */
+        .final-message h2 {
+            font-family: 'Dancing Script', cursive;
+            font-size: 4rem; color: var(--rojo-vino);
+            animation: glow 2s ease-in-out infinite alternate;
+        }
+        .final-emoji { font-size: 3rem; margin-top: 20px; }
+
+        /* --- ANIMACIONES --- */
+        @keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.05); } }
+        @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-15px); } }
+        @keyframes glow { from { text-shadow: 0 0 10px rgba(196, 30, 58, 0.5); } to { text-shadow: 0 0 25px rgba(196, 30, 58, 0.9), 0 0 10px var(--dorado); } }
+        
+        .floating-heart {
+            position: fixed; font-size: 1.5rem; pointer-events: none;
+            animation: floatUp 4s linear forwards; z-index: 100;
+        }
+        @keyframes floatUp {
+            0% { transform: translateY(0) scale(1); opacity: 1; }
+            100% { transform: translateY(-100vh) scale(1.5); opacity: 0; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- PANTALLA DE BIENVENIDA -->
+    <div id="welcome-screen">
+        <h1>Para Lizeth 🌷</h1>
+        <p>Toca para abrir tu sorpresa 🎁</p>
+    </div>
+
+    <!-- AUDIO (Oculto) -->
+    <audio id="bg-music" loop>
+        <source src="cancion.mp3" type="audio/mpeg">
+    </audio>
+
+    <div class="container">
+        <!-- SECCIÓN 1: INTRO -->
+        <section class="hero">
+            <div class="hero-emoji">🌷🍓</div>
+            <h1>Felices 22,<br>mi hermosa Lizeth</h1>
+            <p class="subtitle">Desliza hacia abajo, mi pinwi...</p>
+        </section>
+
+        <!-- SECCIÓN 2: CARTA -->
+        <section class="message">
+            <div class="letter-container">
+                <!-- Imágenes decorativas difuminadas -->
+                <img src="tulipan.jpeg" alt="tulipan" class="decor-img tulipan-1">
+                <img src="fresita.jpeg" alt="fresita" class="decor-img fresita-1">
+                <img src="tulipan.jpeg" alt="tulipan" class="decor-img tulipan-2">
+                <img src="fresita.jpeg" alt="fresita" class="decor-img fresita-2">
+
+                <div class="letter-content">
+                    <p>Hoy celebro no solo que cumples un año más, sino la inmensa <span class="highlight">bendición</span> que es tenerte en mi vida.</p>
+                    <p>Eres la luz que ilumina mis días, mi refugio seguro y mi mayor alegría. Cada instante a tu lado se siente como un regalo del cielo, y hacerte sonreír se ha convertido en mi propósito favorito de cada día. 🥺💗</p>
+                    <p>Gracias por ser tan tú 🥰 por tu ternura infinita, por la fuerza tan inspiradora que llevas dentro y por hacerme sentir la persona más afortunada del universoooooo. Mi vida, mi princesa, eres sin duda la mejor del mundo entero. Me siento infinitamente dichosa de que me hayas abierto las puertas de tu corazón y de tu vida, y de ser yo quien sueñe con ver tu hermosa sonrisa a cada amanecer. 💗🥹</p>
+                    <p>Mi niña linda, eres un ser maravillosooooo. Sé que has tenido que atravesar momentos muy difíciles y que has superado batallas silenciosas; por eso, entre mis oraciones siempre le pido a Diosito que te cuide, te proteja y te libre de todo dolor. No quiero volver a verte sufrir jamás, y menos estando a mi lado. Cualquier cosa que esté en mis manos y a mi alcance para verte plena, feliz y en paz, ten por seguro que lo haré sin dudarlo ni un segundo. 🥺💗</p>
+                    <p>En días tan especiales como hoy, sé que en tu corazón vives la nostalgia de extrañar a quienes ya no están físicamente a tu lado. Pero me reconforta saber que, desde ese cielito bonito donde él te cuida, tu papi se siente profundamente orgulloso de la mujer increíble en la que te has convertido, de la gran persona que eres y de seguir viéndote ser su eterna princesa. :´) ❤️</p>
+                    <p>Liz, mi amor, no sé si alcanzas a dimensionar lo mucho que re quierooo. Aunque estas líneas no estén escritas con tinta en un papel, te prometo que lo hago con el corazón en mano, bueno, una mano jajajaja, porque estoy escribiendo esto el 19 de octubre y tú bien sabes qué estuvimos haciendo jajaja. En verdad agradezco y atesoro con la vida la confianza y la intimidad que me regalas para admirar algo tan sagrado y preciado como tu cuerpo. Amo perdidamente cada centímetro de tu piel que me has permitido conocer. Anhelo con toda mi alma abrazarte, llenarte de besos y decirte al oído, una y otra vez, lo muchísimo que me encantas. ❤️</p>
+                    <p>Tal vez no pueda estar contigo en este cumpleaños, pero te prometo hacer todo lo posible por estar ahí pronto. 💗🥺 Es que no quiero ir y solo para compartir un ratito, quiero estar contigo muuuuchísimo tiempo y el resto de mi vida, quiero que sea tu carita la que vea cada mañana al despertar, tus brazos los que me cobijen cuando tenga un día pesado o tus besitos quienes calmen mi llanto. 💗🥺</p>
+                    <p>Quiero que sepas que te elijo hoy y te elegiría en mil vidas más. A cada mañana, al abrir los ojos, se me dibuja una sonrisa automática en el rostro al pensar en ti y en que muy pronto romperemos esta distancia. Me fascinan nuestras llamadas de horas, escuchar tu voz y compartir risas con esos chistes que solo tú y yo entendemos. Gracias por tu tiempo, por tu paciencia y por no cansarte de mis malas bromas; a veces pido que se me ocurra cualquier tontería solo para lograr sacarte esa risa que me vuelve loca, porque amo ese sonido: me enamora cada día más. Me enamoras tú, completa, con cada uno de tus hermosos detalles. ❤️</p>
+                    <p>Sonará muy cliché, pero hoy me quedé contemplando todo esto y me di cuenta de que, desde el día en que llegaste a mi vida, no he dejado de pensar en ti ni un solo segundo. Siempre intento ser agradecida con Dios por las cosas buenas, pero tu llegada a mi vida es, sin duda, el detalle más hermoso de todos. Es bonito pensar que este tiempo conociéndonos es solo una pequeña fracción de todo el camino bonito que nos espera juntas. Eres un ser lleno de luz, de vida y de magia. Estoy completamente segura de que la pequeña Liz que llevas dentro abraza con orgullo a la mujer valiente, fuerte y capaz en la que te has transformado. Pese a todo, sigues brillando con un alma pura y simplemente admirable. 💗🥺</p>
+                    <p>Gracias por tu vida, por tu esencia tan auténtica, por tu tenacidad y por esa energía contagiosa con la que haces todo. Deseo con todo mi ser que alcances cada meta, cada sueño y cada propósito que te propongas, y ahí estaré yo, sosteniendo tu mano y apoyándote incondicionalmenteeee. Y si por alguna cosa u otra algún día las cosas cambian, quiero que guardes en el alma que una parte de mí siempre te va a pertenecer, hasta mi último suspiro. 🥺💗</p>
+                    <p>Que estos 22 años te devuelvan al multiplicado toda la felicidad, la paz y el amor que tú le traes a mi vida cada día, mi niña hermosaaa 🥺💗 ¡Feliz cumpleaños! ❤️🥹</p>
+                    <p class="sign-off">Con todo mi amor💗</p>
+                    <p class="posdata"><strong>Posdata:</strong> No terminé de escribir todo ese día porque me pusiste muy cachondis y jajjaja, perooo, siento exactamente lo mismo, bueno incluso lo siento con más intensidad, me encantas, mi niñaa 🥺💗</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECCIÓN 3: MÚSICA -->
+        <section class="music">
+            <div class="music-player">
+                <img src="img.jpeg" alt="Portada" class="cover-art">
+                <div class="song-info">
+                    <h3>Bendita Tu Luz</h3>
+                    <p>Maná</p>
+                </div>
+                <button class="play-btn" id="play-pause-btn">⏸️</button>
+            </div>
+        </section>
+
+        <!-- SECCIÓN 4: FINAL -->
+        <section class="final-message" id="final-section">
+            <h2>Te amo</h2>
+            <p style="font-size: 1.2rem; margin-top: 10px;">Hoy, mañana y siempre.</p>
+            <div class="final-emoji">🍓🌷❤️</div>
+        </section>
+    </div>
+
+    <script>
+        // --- 1. CONTROL DE LA PANTALLA DE BIENVENIDA Y AUDIO ---
+        const welcomeScreen = document.getElementById('welcome-screen');
+        const audio = document.getElementById('bg-music');
+        const playBtn = document.getElementById('play-pause-btn');
+        let isPlaying = false;
+
+        welcomeScreen.addEventListener('click', () => {
+            audio.play().then(() => {
+                isPlaying = true;
+                welcomeScreen.classList.add('hidden');
+                setTimeout(() => { welcomeScreen.style.display = 'none'; }, 800);
+            }).catch(e => console.log("Error al reproducir:", e));
+        });
+
+        // --- 2. BOTÓN PLAY/PAUSE ---
+        playBtn.addEventListener('click', () => {
+            if (isPlaying) {
+                audio.pause();
+                playBtn.textContent = '▶️';
+            } else {
+                audio.play();
+                playBtn.textContent = '⏸️';
+            }
+            isPlaying = !isPlaying;
+        });
+
+        // --- 3. ANIMACIÓN AL HACER SCROLL (Intersection Observer) ---
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    
+                    // Generar corazones flotantes al hacer scroll en la carta o música
+                    if(entry.target.classList.contains('message') || entry.target.classList.contains('music')) {
+                        createHeart();
+                    }
+
+                    // --- 4. CONFETI AL LLEGAR AL FINAL ---
+                    if (entry.target.id === 'final-section') {
+                        launchConfetti();
+                    }
+                }
+            });
+        }, { threshold: 0.2 }); // Umbral un poco más bajo para que active antes
+
+        document.querySelectorAll('section').forEach(section => {
+            observer.observe(section);
+        });
+
+        // --- FUNCIÓN CORAZONES FLOTANTES ---
+        function createHeart() {
+            const heart = document.createElement('div');
+            heart.classList.add('floating-heart');
+            heart.textContent = ['🐧', '💗', '🐧'][Math.floor(Math.random() * 3)];
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.animationDuration = (Math.random() * 2 + 3) + 's';
+            document.body.appendChild(heart);
+            setTimeout(() => heart.remove(), 5000);
+        }
+
+        // --- FUNCIÓN CONFETI ---
+        function launchConfetti() {
+            const duration = 3000;
+            const end = Date.now() + duration;
+
+            (function frame() {
+                confetti({
+                    particleCount: 5,
+                    angle: 60,
+                    spread: 55,
+                    origin: { x: 0 },
+                    colors: ['#8B0000', '#D4AF37', '#C41E3A']
+                });
+                confetti({
+                    particleCount: 5,
+                    angle: 120,
+                    spread: 55,
+                    origin: { x: 1 },
+                    colors: ['#8B0000', '#D4AF37', '#C41E3A']
+                });
+
+                if (Date.now() < end) {
+                    requestAnimationFrame(frame);
+                }
+            }());
+        }
+    </script>
+</body>
+</html>
