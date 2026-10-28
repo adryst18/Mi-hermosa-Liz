@@ -49,12 +49,43 @@
         }
 
         #welcome-screen h1 { 
-            color: var(--dorado); 
-            font-size: 2.5rem; 
+            color: #FFF8DC; /* Núcleo blanco crema para que el neón resalte */
+            font-size: 2.8rem; /* Un poquito más grande para mayor impacto */
             text-align: center; 
             margin-bottom: 30px; 
-            text-shadow: 0 2px 10px rgba(0,0,0,0.6);
+            font-weight: 700;
             z-index: 10;
+            /* Efecto Neón Dorado Intenso con múltiples capas */
+            text-shadow: 
+                0 0 5px #fff,
+                0 0 10px #fff,
+                0 0 20px #FFD700,
+                0 0 40px #FFD700,
+                0 0 80px #FFA500,
+                0 0 90px #FFA500;
+            /* Animación suave para que el neón "respire" */
+            animation: neonPulse 2.5s infinite alternate;
+        }
+
+        /* Animación del pulso neón */
+        @keyframes neonPulse {
+            from {
+                text-shadow: 
+                    0 0 5px #fff,
+                    0 0 10px #fff,
+                    0 0 20px #FFD700,
+                    0 0 40px #FFD700,
+                    0 0 80px #FFA500;
+            }
+            to {
+                text-shadow: 
+                    0 0 10px #fff,
+                    0 0 20px #fff,
+                    0 0 30px #FFD700,
+                    0 0 60px #FFD700,
+                    0 0 100px #FFA500,
+                    0 0 120px #FFA500;
+            }
         }
 
         /* --- SPARKLES (Partículas de Anime mejoradas y más visibles) --- */
