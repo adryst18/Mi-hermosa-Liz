@@ -23,7 +23,7 @@
         
         body {
             font-family: 'Playfair Display', serif;
-            background-color: var(--crema);
+            background-color: var(--crema); /* Fondo general CREMA */
             color: var(--texto);
             overflow-x: hidden;
             line-height: 1.6;
@@ -32,81 +32,176 @@
 
         h1, h2, h3 { font-family: 'Playfair Display', serif; color: var(--rojo-vino); }
 
-        /* --- PANTALLA DE BIENVENIDA MEJORADA --- */
+        /* --- PANTALLA DEL SOBRE ANIMADO --- */
         #welcome-screen {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            /* Degradado animado: Atardecer cálido a noche azul profunda */
-            background: linear-gradient(to bottom, #ff7e5f, #feb47b, #8B0000);
-            animation: skyTransition 12s ease-in-out infinite alternate;
-            display: flex; flex-direction: column; justify-content: center; align-items: center;
-            z-index: 9999; cursor: pointer; transition: opacity 0.6s ease;
+            position: fixed; 
+            top: 0; 
+            left: 0; 
+            width: 100%; 
+            height: 100%;
+            background-color: var(--crema); /* Fondo crema durante la animación */
+            display: flex; 
+            justify-content: center; 
+            align-items: center;
+            z-index: 9999; 
             overflow: hidden;
-        }
-
-        @keyframes skyTransition {
-            0% { background: linear-gradient(to bottom, #ff7e5f, #feb47b, #8B0000); } /* Atardecer */
-            100% { background: linear-gradient(to bottom, #0f0c29, #302b63, #24243e); } /* Noche estrellada azul */
-        }
-
-        #welcome-screen h1 { 
-            color: var(--dorado); 
-            font-size: 2.5rem; 
-            text-align: center; 
-            margin-bottom: 30px; 
-            text-shadow: 0 2px 10px rgba(0,0,0,0.6);
-            z-index: 10;
-        }
-
-        /* --- SPARKLES (Partículas de Anime mejoradas y más visibles) --- */
-        .sparkle {
-            position: absolute;
-            background: white;
-            border-radius: 50%;
-            /* Doble sombra para un brillo más intenso y difuso */
-            box-shadow: 0 0 10px 3px rgba(255, 255, 255, 0.9), 0 0 20px 5px rgba(255, 255, 255, 0.4);
-            animation: twinkle var(--dur, 3s) infinite ease-in-out;
-            z-index: 1;
-        }
-        @keyframes twinkle {
-            0%, 100% { opacity: 0.3; transform: scale(0.8); }
-            50% { opacity: 1; transform: scale(1.5); } /* Crece más para que se note */
-        }
-
-
-        /* 8 elementos exactamente para máximo rendimiento */
-        .sparkle:nth-child(1) { top: 10%; left: 15%; width: 3px; height: 3px; animation-delay: 0s; }
-        .sparkle:nth-child(2) { top: 20%; left: 80%; width: 5px; height: 5px; animation-delay: 0.5s; }
-        .sparkle:nth-child(3) { top: 40%; left: 10%; width: 4px; height: 4px; animation-delay: 1s; }
-        .sparkle:nth-child(4) { top: 60%; left: 85%; width: 3px; height: 3px; animation-delay: 1.5s; }
-        .sparkle:nth-child(5) { top: 15%; left: 50%; width: 4px; height: 4px; animation-delay: 2s; }
-        .sparkle:nth-child(6) { top: 70%; left: 20%; width: 5px; height: 5px; animation-delay: 0.8s; }
-        .sparkle:nth-child(7) { top: 30%; left: 70%; width: 3px; height: 3px; animation-delay: 1.2s; }
-        .sparkle:nth-child(8) { top: 80%; left: 60%; width: 4px; height: 4px; animation-delay: 2.5s; }
-
-              /* --- BOTÓN CORAZÓN ORIGAMI MEJORADO --- */
-        .origami-btn {
-            position: relative;
-            width: 150px;  /* Más grande */
-            height: 150px;
             cursor: pointer;
-            animation: heartbeat 1.5s ease-in-out infinite;
+        }
+
+        /* Contenedor 3D */
+        .envelope-container {
+            perspective: 1000px;
             display: flex;
             justify-content: center;
             align-items: center;
-            z-index: 10;
-            -webkit-tap-highlight-color: transparent;
-            /* Sombra exterior brillante para que resalte */
-            filter: drop-shadow(0 0 20px rgba(255, 100, 100, 0.6));
-        }
-        .origami-btn .heart-shape {
-            width: 100%;
-            height: 100%;
-            /* Múltiples sombras para brillo intenso */
-            filter: drop-shadow(0 5px 15px rgba(0,0,0,0.5)) 
-                    drop-shadow(0 0 20px rgba(255, 50, 50, 0.8))
-                    drop-shadow(0 0 40px rgba(255, 100, 100, 0.6));
+            margin-top: 60px; /* Bajado para dejar espacio a la carta cuando salga */
         }
 
+        /* Cuerpo del sobre */
+        .envelope-wrapper {
+            position: relative;
+            width: 290px;
+            height: 190px;
+            background-color: var(--rojo-vino);
+            border-bottom-left-radius: 8px;
+            border-bottom-right-radius: 8px;
+            box-shadow: 0 15px 35px rgba(139, 0, 0, 0.25);
+        }
+
+        /* Tarjeta interna que sale */
+        .letter-slide {
+            position: absolute;
+            bottom: 5px;
+            left: 5%;
+            width: 90%;
+            height: 90%;
+            background-color: #FFFFFF; /* Lienzo blanco sólido */
+            border: 1px solid rgba(139, 0, 0, 0.15);
+            border-radius: 6px;
+            z-index: 2;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 15px;
+            text-align: center;
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.08);
+            animation: emergeLetter 1.2s cubic-bezier(0.25, 1, 0.5, 1) 2s forwards;
+            will-change: transform;
+        }
+
+        /* Animación de balanceo de ladito a ladito */
+        .letter-slide.waiting-tap {
+            animation: floatSideToSide 2.5s ease-in-out infinite alternate !important;
+            z-index: 10 !important;
+        }
+
+        /* Animación de Zoom Sólido */
+        .letter-slide.zoom-in {
+            animation: solidZoom 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards !important;
+            z-index: 999 !important;
+        }
+
+        /* Oculta los textos durante el zoom para que se vea blanco pulcro */
+        .letter-slide.zoom-in .mini-heart,
+        .letter-slide.zoom-in .preview-text {
+            opacity: 0;
+            transition: opacity 0.15s ease;
+        }
+
+        .letter-slide .mini-heart {
+            font-size: 1.6rem;
+            margin-bottom: 6px;
+            transition: opacity 0.3s;
+        }
+
+        .letter-slide .preview-text {
+            font-family: 'Dancing Script', cursive;
+            font-size: 1.35rem;
+            color: var(--rojo-vino);
+            font-weight: 700;
+            line-height: 1.3;
+            transition: opacity 0.3s;
+        }
+
+        /* Solapa superior del sobre */
+        .lid {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 0;
+            height: 0;
+            border-left: 145px solid transparent;
+            border-right: 145px solid transparent;
+            border-top: 110px solid var(--rojo-vino);
+            transform-origin: top;
+            z-index: 4;
+            animation: openLid 0.8s ease-in-out 1.2s forwards;
+        }
+
+        /* Solapas inferiores y laterales del sobre */
+        .envelope-wrapper::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 0;
+            border-left: 145px solid #6E0000;
+            border-right: 145px solid #6E0000;
+            border-bottom: 100px solid #6E0000;
+            border-top: 90px solid transparent;
+            border-bottom-left-radius: 8px;
+            border-bottom-right-radius: 8px;
+            z-index: 3;
+        }
+
+        /* --- KEYFRAMES --- */
+        @keyframes openLid {
+            0% {
+                transform: rotateX(0deg);
+                z-index: 4;
+            }
+            100% {
+                transform: rotateX(180deg);
+                z-index: 1;
+            }
+        }
+
+        /* Sube saliendo COMPLETAMENTE del sobre */
+        @keyframes emergeLetter {
+            0% {
+                transform: translateY(0);
+                z-index: 2;
+            }
+            100% {
+                transform: translateY(-210px);
+                z-index: 10;
+            }
+        }
+
+        /* Balanceo suave de lado a lado esperando interacción */
+        @keyframes floatSideToSide {
+            0% {
+                transform: translateY(-210px) rotate(-3deg);
+            }
+            50% {
+                transform: translateY(-218px) rotate(0deg);
+            }
+            100% {
+                transform: translateY(-210px) rotate(3deg);
+            }
+        }
+
+        /* Zoom blanco SÓLIDO que cubre la pantalla sin transparencias */
+        @keyframes solidZoom {
+            0% {
+                transform: translateY(-210px) scale(1);
+            }
+            100% {
+                transform: translateY(-210px) scale(22);
+            }
+        }
 
         /* --- CONTENIDO PRINCIPAL --- */
         .container { max-width: 600px; margin: 0 auto; padding: 20px; }
@@ -130,10 +225,10 @@
         /* --- SECCIÓN 2: CARTA MANUSCRITA --- */
         .letter-container {
             position: relative;
-            background: #ffffff;
+            background: #FFFFFF; /* Lienzo de la carta en BLANCO */
             padding: 40px 25px;
             border-radius: 4px;
-            box-shadow: 0 15px 40px rgba(139, 0, 0, 0.1);
+            box-shadow: 0 15px 40px rgba(139, 0, 0, 0.08);
             border: 1px solid rgba(212, 175, 55, 0.4);
             overflow: hidden;
             width: 100%;
@@ -229,48 +324,16 @@
 </head>
 <body>
 
-    <!-- PANTALLA DE BIENVENIDA MEJORADA -->
+    <!-- PANTALLA DEL SOBRE ANIMADO -->
     <div id="welcome-screen">
-        <!-- 20 Partículas brillantes (Sparkles) estilo anime, más visibles -->
-        <div class="sparkle" style="top: 5%; left: 10%; width: 4px; height: 4px; --dur: 2.5s; animation-delay: 0s;"></div>
-        <div class="sparkle" style="top: 15%; left: 85%; width: 6px; height: 6px; --dur: 3s; animation-delay: 0.5s;"></div>
-        <div class="sparkle" style="top: 25%; left: 20%; width: 3px; height: 3px; --dur: 4s; animation-delay: 1s;"></div>
-        <div class="sparkle" style="top: 10%; left: 50%; width: 5px; height: 5px; --dur: 3.5s; animation-delay: 1.5s;"></div>
-        <div class="sparkle" style="top: 35%; left: 75%; width: 4px; height: 4px; --dur: 2.8s; animation-delay: 0.2s;"></div>
-        <div class="sparkle" style="top: 45%; left: 5%; width: 6px; height: 6px; --dur: 3.2s; animation-delay: 0.8s;"></div>
-        <div class="sparkle" style="top: 55%; left: 90%; width: 3px; height: 3px; --dur: 4.5s; animation-delay: 1.2s;"></div>
-        <div class="sparkle" style="top: 65%; left: 15%; width: 5px; height: 5px; --dur: 2.9s; animation-delay: 0.4s;"></div>
-        <div class="sparkle" style="top: 75%; left: 80%; width: 4px; height: 4px; --dur: 3.8s; animation-delay: 1.8s;"></div>
-        <div class="sparkle" style="top: 85%; left: 40%; width: 6px; height: 6px; --dur: 3.1s; animation-delay: 0.6s;"></div>
-        <div class="sparkle" style="top: 20%; left: 35%; width: 3px; height: 3px; --dur: 4.2s; animation-delay: 2s;"></div>
-        <div class="sparkle" style="top: 30%; left: 60%; width: 5px; height: 5px; --dur: 2.7s; animation-delay: 0.3s;"></div>
-        <div class="sparkle" style="top: 50%; left: 45%; width: 4px; height: 4px; --dur: 3.6s; animation-delay: 1.1s;"></div>
-        <div class="sparkle" style="top: 60%; left: 25%; width: 6px; height: 6px; --dur: 3.3s; animation-delay: 0.9s;"></div>
-        <div class="sparkle" style="top: 70%; left: 65%; width: 3px; height: 3px; --dur: 4.1s; animation-delay: 1.6s;"></div>
-        <div class="sparkle" style="top: 80%; left: 10%; width: 5px; height: 5px; --dur: 2.6s; animation-delay: 0.7s;"></div>
-        <div class="sparkle" style="top: 90%; left: 70%; width: 4px; height: 4px; --dur: 3.9s; animation-delay: 1.4s;"></div>
-        <div class="sparkle" style="top: 12%; left: 95%; width: 3px; height: 3px; --dur: 4.3s; animation-delay: 2.2s;"></div>
-        <div class="sparkle" style="top: 40%; left: 95%; width: 5px; height: 5px; --dur: 3.4s; animation-delay: 0.1s;"></div>
-        <div class="sparkle" style="top: 95%; left: 50%; width: 6px; height: 6px; --dur: 2.8s; animation-delay: 1.9s;"></div>
-        <h1>Para la niña más hermosa del mundoooo </h1>
-        
-        <!-- Botón Corazón de Origami que late (MEJORADO) -->
-        <div class="origami-btn" id="welcome-trigger">
-            <svg viewBox="0 0 100 100" class="heart-shape">
-                <!-- Forma base del corazón - ROJO MÁS BRILLANTE -->
-                <path d="M50 88 C50 88 10 60 10 35 C10 18 25 8 40 8 C48 8 50 18 50 18 C50 18 52 8 60 8 C75 8 90 18 90 35 C90 60 50 88 50 88 Z" fill="#FF1744"/>
-                <!-- Líneas de pliegue del origami - más visibles -->
-                <path d="M50 18 L50 88" stroke="#8B0000" stroke-width="2" opacity="0.7"/>
-                <path d="M10 35 L50 50 L90 35" stroke="#8B0000" stroke-width="2" opacity="0.7"/>
-                <path d="M40 8 L50 50 L60 8" stroke="#8B0000" stroke-width="2" opacity="0.7"/>
-                <!-- Brillos para simular textura de papel doblado - MÁS INTENSOS -->
-                <path d="M10 35 L50 18 L50 50 Z" fill="rgba(255,255,255,0.3)"/>
-                <path d="M90 35 L50 18 L50 50 Z" fill="rgba(0,0,0,0.2)"/>
-                <!-- Brillo central adicional -->
-                <path d="M35 30 Q50 40 65 30 Q60 50 50 55 Q40 50 35 30" fill="rgba(255,255,255,0.4)"/>
-            </svg>
-     
-         <!--  aqui va el texto en lugar de click aquí --> <span class="btn-text">  </span>
+        <div class="envelope-container">
+            <div class="envelope-wrapper">
+                <div class="lid"></div>
+                <div class="letter-slide" id="interactive-letter">
+                    <span class="mini-heart">🌷🍓</span>
+                    <span class="preview-text">Feliz vuelta al sol, mi vidaaa</span>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -328,26 +391,44 @@
         <!-- SECCIÓN 4: FINAL -->
         <section class="final-message" id="final-section">
             <h2>Feliz cumpleaños, mi niña hermosa 🎂</h2>
-                 <h2>Te amoooo </h2>
+            <h2>Te amoooo </h2>
             <p style="font-size: 1.2rem; margin-top: 10px;">Hoy, mañana y siempre.</p>
             <div class="final-emoji">🐧💗🐧</div>
         </section>
     </div>
 
     <script>
-        // --- 1. CONTROL DE LA PANTALLA DE BIENVENIDA Y AUDIO ---
+        // --- 1. LÓGICA DE SECUENCIA INTERACTIVA Y AUDIO ---
         const welcomeScreen = document.getElementById('welcome-screen');
+        const letter = document.getElementById('interactive-letter');
         const audio = document.getElementById('bg-music');
         const playBtn = document.getElementById('play-pause-btn');
         let isPlaying = false;
+        let isOpened = false;
 
-        // Al hacer click en cualquier parte de la pantalla de bienvenida (incluido el corazón)
+        // Tras salir del sobre (3.2s), activa el flotado/balanceo para invitar al TAP
+        setTimeout(() => {
+            letter.classList.add('waiting-tap');
+        }, 3200);
+
+        // Al hacer TAP en cualquier parte de la pantalla de bienvenida
         welcomeScreen.addEventListener('click', () => {
+            if (isOpened) return;
+            isOpened = true;
+
+            // Inicia reproducción de audio de inmediato con la interacción del usuario
             audio.play().then(() => {
                 isPlaying = true;
-                welcomeScreen.classList.add('hidden');
-                setTimeout(() => { welcomeScreen.style.display = 'none'; }, 600);
-            }).catch(e => console.log("Esperando interacción para audio:", e));
+            }).catch(e => console.log("Audio diferido:", e));
+
+            // Aplica la animación de Zoom Sólido sin texto
+            letter.classList.remove('waiting-tap');
+            letter.classList.add('zoom-in');
+
+            // Al finalizar el zoom sólido (0.8s), oculta la pantalla del sobre
+            setTimeout(() => {
+                welcomeScreen.style.display = 'none';
+            }, 750);
         });
 
         // --- 2. BOTÓN PLAY/PAUSE ---
@@ -362,7 +443,7 @@
             isPlaying = !isPlaying;
         });
 
-        // --- 3. ANIMACIÓN AL HACER SCROLL (OPTIMIZADA) ---
+        // --- 3. ANIMACIÓN AL HACER SCROLL ---
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
@@ -418,7 +499,6 @@
                 if (Date.now() < end) {
                     requestAnimationFrame(frame);
                 }
-                //
             }());
         }
     </script>
