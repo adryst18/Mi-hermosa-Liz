@@ -83,11 +83,11 @@
         .sparkle:nth-child(7) { top: 30%; left: 70%; width: 3px; height: 3px; animation-delay: 1.2s; }
         .sparkle:nth-child(8) { top: 80%; left: 60%; width: 4px; height: 4px; animation-delay: 2.5s; }
 
-        /* --- BOTÓN CORAZÓN ORIGAMI --- */
+              /* --- BOTÓN CORAZÓN ORIGAMI MEJORADO --- */
         .origami-btn {
             position: relative;
-            width: 120px;
-            height: 120px;
+            width: 150px;  /* Más grande */
+            height: 150px;
             cursor: pointer;
             animation: heartbeat 1.5s ease-in-out infinite;
             display: flex;
@@ -95,33 +95,18 @@
             align-items: center;
             z-index: 10;
             -webkit-tap-highlight-color: transparent;
+            /* Sombra exterior brillante para que resalte */
+            filter: drop-shadow(0 0 20px rgba(255, 100, 100, 0.6));
         }
         .origami-btn .heart-shape {
             width: 100%;
             height: 100%;
-            filter: drop-shadow(0 10px 15px rgba(0,0,0,0.4));
-        }
-        .origami-btn .btn-text {
-            position: absolute;
-            color: white;
-            font-family: 'Caveat', cursive;
-            font-size: 1.6rem;
-            font-weight: 700;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.6);
-            pointer-events: none;
-            z-index: 11;
-            margin-top: 5px;
-        }
-        @keyframes heartbeat {
-            0% { transform: scale(1); }
-            15% { transform: scale(1.15); }
-            30% { transform: scale(1); }
-            45% { transform: scale(1.1); }
-            60% { transform: scale(1); }
-            100% { transform: scale(1); }
+            /* Múltiples sombras para brillo intenso */
+            filter: drop-shadow(0 5px 15px rgba(0,0,0,0.5)) 
+                    drop-shadow(0 0 20px rgba(255, 50, 50, 0.8))
+                    drop-shadow(0 0 40px rgba(255, 100, 100, 0.6));
         }
 
-        .hidden { opacity: 0; pointer-events: none; }
 
         /* --- CONTENIDO PRINCIPAL --- */
         .container { max-width: 600px; margin: 0 auto; padding: 20px; }
@@ -269,19 +254,22 @@
         <div class="sparkle" style="top: 95%; left: 50%; width: 6px; height: 6px; --dur: 2.8s; animation-delay: 1.9s;"></div>
         <h1>Para la niña más hermosa del mundoooo </h1>
         
-        <!-- Botón Corazón de Origami que late -->
+        <!-- Botón Corazón de Origami que late (MEJORADO) -->
         <div class="origami-btn" id="welcome-trigger">
             <svg viewBox="0 0 100 100" class="heart-shape">
-                <!-- Forma base del corazón -->
-                <path d="M50 88 C50 88 10 60 10 35 C10 18 25 8 40 8 C48 8 50 18 50 18 C50 18 52 8 60 8 C75 8 90 18 90 35 C90 60 50 88 50 88 Z" fill="#C41E3A"/>
-                <!-- Líneas de pliegue del origami -->
-                <path d="M50 18 L50 88" stroke="#8B0000" stroke-width="1.5" opacity="0.6"/>
-                <path d="M10 35 L50 50 L90 35" stroke="#8B0000" stroke-width="1.5" opacity="0.6"/>
-                <path d="M40 8 L50 50 L60 8" stroke="#8B0000" stroke-width="1.5" opacity="0.6"/>
-                <!-- Brillos para simular textura de papel doblado -->
-                <path d="M10 35 L50 18 L50 50 Z" fill="rgba(255,255,255,0.15)"/>
-                <path d="M90 35 L50 18 L50 50 Z" fill="rgba(0,0,0,0.15)"/>
+                <!-- Forma base del corazón - ROJO MÁS BRILLANTE -->
+                <path d="M50 88 C50 88 10 60 10 35 C10 18 25 8 40 8 C48 8 50 18 50 18 C50 18 52 8 60 8 C75 8 90 18 90 35 C90 60 50 88 50 88 Z" fill="#FF1744"/>
+                <!-- Líneas de pliegue del origami - más visibles -->
+                <path d="M50 18 L50 88" stroke="#8B0000" stroke-width="2" opacity="0.7"/>
+                <path d="M10 35 L50 50 L90 35" stroke="#8B0000" stroke-width="2" opacity="0.7"/>
+                <path d="M40 8 L50 50 L60 8" stroke="#8B0000" stroke-width="2" opacity="0.7"/>
+                <!-- Brillos para simular textura de papel doblado - MÁS INTENSOS -->
+                <path d="M10 35 L50 18 L50 50 Z" fill="rgba(255,255,255,0.3)"/>
+                <path d="M90 35 L50 18 L50 50 Z" fill="rgba(0,0,0,0.2)"/>
+                <!-- Brillo central adicional -->
+                <path d="M35 30 Q50 40 65 30 Q60 50 50 55 Q40 50 35 30" fill="rgba(255,255,255,0.4)"/>
             </svg>
+     
          <!--  aqui va el texto en lugar de click aquí --> <span class="btn-text">  </span>
         </div>
     </div>
@@ -296,7 +284,7 @@
         <section class="hero visible">
             <div class="hero-emoji">🌷🍓</div>
             <h1>Feliz cumpleee,<br>mi princesa hermosa</h1>
-            <p class="subtitle">Desliza hacia abajo, fresita</p>
+            <p class="subtitle">Baja, fresita</p>
         </section>
 
         <!-- SECCIÓN 2: CARTA -->
@@ -339,7 +327,8 @@
 
         <!-- SECCIÓN 4: FINAL -->
         <section class="final-message" id="final-section">
-            <h2>Te amo</h2>
+            <h2>Feliz cumpleaños, mi niña hermosa 🎂</h2>
+                 <h2>Te amoooo </h2>
             <p style="font-size: 1.2rem; margin-top: 10px;">Hoy, mañana y siempre.</p>
             <div class="final-emoji">🐧💗🐧</div>
         </section>
